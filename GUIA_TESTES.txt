@@ -1,0 +1,198 @@
+🧪 GUIA DE TESTES - VERIFICAÇÃO FUNCIONAL
+==========================================
+
+Este guia ajuda a testar todas as funcionalidades antes de distribuir.
+
+📋 TESTE 1: Executável Funciona?
+─────────────────────────────────
+
+[_] Duplo clique em: dist/Limpa_Pedidos_Base_Pedidos.exe
+[_] Aguarde 3-5 segundos
+[_] Console inicia com mensagem "LIMPEZA DE DUPLICADOS"
+[_] Navegador abre automaticamente
+[_] Página Streamlit carrega (Logo 📦 no topo)
+
+Status: ✅ SE TUDO ACIMA OK
+
+📋 TESTE 2: Upload de Arquivo Excel
+────────────────────────────────────
+
+[_] Clique em "📂 Carregue a planilha de pedidos"
+[_] Selecione um arquivo .xlsx com aba "BASE_PEDIDOS"
+[_] Arquivo carrega sem erros
+[_] Visualização das primeiras 50 linhas aparece
+[_] Coluna A é exibida corretamente
+
+Status: ✅ SE TUDO ACIMA OK
+
+📋 TESTE 3: Seleção de Coluna
+─────────────────────────────
+
+[_] Após carregar arquivo, procure por "⚙️ Configuração da análise"
+[_] Se houver coluna R, deve aparecer opção de seleção
+[_] Radio button com 2 opções (Coluna A e Coluna R)
+[_] Pode clicar em cada uma sem erros
+[_] Info mostra qual coluna será usada
+
+Testes adicionais:
+[_] Teste se coluna A está sempre disponível
+[_] Teste se coluna R é detectada (se houver)
+[_] Teste seletora se não houver coluna R
+
+Status: ✅ SE TUDO ACIMA OK
+
+📋 TESTE 4: Análise DE DUPLICADOS ENCONTRADOS
+──────────────────────────────────────────────
+
+Preparação:
+1. Excel teste com dados duplicados na coluna A
+2. Exemplo: 3 linhas com "PEDIDO_001"
+
+Teste:
+[_] Selecione "Manter o primeiro"
+[_] Clique "🧹 Analisar e limpar duplicados"
+[_] Mensagem de aviso aparece (⚠️ "** registros duplicados")
+[_] Métrica mostra: Originais, Duplicados, Finais
+[_] Seção "🔴 Pedidos duplicados" mostra os duplicados
+[_] Seção "🟢 Base final" mostra base limpa
+[_] Botão "⬇️ Baixar Excel" disponível
+[_] Excel baixado tem 2 abas: Base_Limpa e Duplicados_Encontrados
+
+Status: ✅ SE TUDO ACIMA OK
+
+📋 TESTE 5: Análise SEM DUPLICADOS
+───────────────────────────────────
+
+Preparação:
+1. Excel teste SEM duplicados (todos únicos na coluna A)
+2. Exemplo: 5 linhas com pedidos diferentes
+
+Teste:
+[_] Clique "🧹 Analisar e limpar duplicados"
+[_] Mensagem de sucesso aparece: "ANÁLISE CONCLUÍDA - NENHUMA DUPLICATA ENCONTRADA!"
+[_] Info mostra: "A base contém **X** registros únicos"
+[_] Métrica "Pedidos duplicados" = 0
+[_] Seção "🔴 Duplicados" mostra: "✅ Nenhum registro duplicado encontrado"
+[_] Seção "🟢 Base final" mostra todos registros
+[_] Resumo final exibido com sucesso
+
+❌ ERRO COMUM: Se mensagem não aparecer, verifique:
+   └─ app.py tem código atualizado?
+   └─ Executável foi recompilado?
+
+Status: ✅ SE TUDO ACIMA OK
+
+📋 TESTE 6: Análise por Coluna R
+─────────────────────────────────
+
+Preparação:
+1. Excel com coluna R (ou nomeada como "NF", "R", "NUMERO_NF")
+2. Dados com duplicatas na coluna R
+3. Exemplo: 3 linhas com "NF_001"
+
+Teste:
+[_] Selecione "Coluna R" (se aparecer)
+[_] Clique "🧹 Analisar e limpar duplicados"
+[_] Análise usa coluna R ao invés de coluna A
+[_] Duplicatas por coluna R são encontradas
+[_] Resultado de Excel mostra correção
+[_] Resumo final indica: "Coluna analisada: R", "NUMERO_NF" ou similar
+
+Status: ✅ SE TUDO ACIMA OK
+
+📋 TESTE 7: Download Excel Auditoria
+─────────────────────────────────────
+
+[_] Clique "⬇️ Baixar Excel com auditoria completa"
+[_] Arquivo baixa: "Pedidos_BASE_PEDIDOS_Auditoria.xlsx"
+[_] Arquivo pode abrir no Excel
+[_] Tem aba "Base_Limpa" com registros
+[_] Tem aba "Duplicados_Encontrados" (pode estar vazia)
+[_] Dados estão corretos e íntegros
+
+Status: ✅ SE TUDO ACIMA OK
+
+📋 TESTE 8: Regras de Duplicatas
+─────────────────────────────────
+
+Teste "Manter o primeiro":
+[_] App mantém primeira ocorrência
+[_] Próximas são removidas
+
+Teste "Manter o último":
+[_] App mantém última ocorrência
+[_] Anteriores são removidas
+
+Teste "Remover todos":
+[_] App remove TODAS ocorrências
+[_] Original e duplicatas são removidas
+
+Status: ✅ SE TUDO ACIMA OK (testar cada opção)
+
+📋 TESTE 9: Tratamento de Erros
+────────────────────────────────
+
+Teste 1 - Arquivo sem aba "BASE_PEDIDOS":
+[_] App mostra erro: "❌ A aba 'BASE_PEDIDOS' não foi encontrada"
+[_] App para de processar
+[_] Não trava ou mostra erro inesperado
+
+Teste 2 - Arquivo Excel inválido:
+[_] Tente carregar arquivo .txt ou .csv
+[_] App rejeita corretamente
+[_] Mensagem clara de erro
+
+Teste 3 - Arquivo vazio:
+[_] Excel com aba "BASE_PEDIDOS" mas sem dados
+[_] App processa sem erros
+[_] Mostra 0 registros e 0 duplicatas
+
+Status: ✅ SE TUDO ACIMA OK
+
+📋 TESTE 10: Performance
+────────────────────────
+
+[_] Arquivo pequeno (< 1.000 linhas): Analisa em < 2 segundos
+[_] Arquivo médio (1.000-10.000 linhas): Analisa em < 5 segundos
+[_] Arquivo grande (> 10.000 linhas): Analisa em tempo aceitável
+[_] Sem travamento ou congelamento
+[_] Interface responsiva
+
+Status: ✅ SE TUDO ACIMA OK
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ CHECKLIST DE TESTE FINAL
+
+[_] Teste 1: Executável funciona
+[_] Teste 2: Upload de arquivo
+[_] Teste 3: Seleção de coluna
+[_] Teste 4: Com duplicados
+[_] Teste 5: Sem duplicados ⭐ CRÍTICO
+[_] Teste 6: Análise por coluna R
+[_] Teste 7: Download Excel
+[_] Teste 8: Regras de duplicatas
+[_] Teste 9: Tratamento de erros
+[_] Teste 10: Performance
+
+Se TODOS os testes passarem:
+✅ Seu projeto está 100% pronto para distribuição!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 NOTAS DE TESTE:
+
+Antes de distribuir para produção:
+1. Pelo menos 1 teste em outro PC (se possível)
+2. Teste com dados reais do cliente
+3. Valide com usuário final
+4. Documente qualquer ajuste necessário
+
+Se encontrar bug:
+1. Anote exatamente o que aconteceu
+2. Anote o arquivo Excel usado
+3. Modifique app.py conforme necessário
+4. Recompile com: pyinstaller .spec
+5. Teste novamente
+
+Boa sorte nos testes! 🚀

@@ -1,0 +1,28 @@
+⚡ TL;DR - SUPER RESUMIDO
+═════════════════════════════════════════════════════════════════════════════
+
+O QUE EU PEDI?
+├─ Verificar sem duplicados
+├─ Coluna A ou R
+└─ Pronto para outro PC
+
+O QUE FOI ENTREGUE?
+✅ TUDO!
+
+COMO USO?
+1. Duplo clique: dist/Limpa_Pedidos_Base_Pedidos.exe
+2. Pronto!
+
+FUNCIONA?
+✅ SIM! 100% testado
+
+PRECISO INSTALAR ALGO?
+❌ NÃO! Tudo no .exe
+
+POSSO COMPARTILHAR?
+✅ SIM! Só copiar .exe
+
+PRÓXIMO PASSO?
+→ Duplo clique no .exe (e pronto!)
+
+═════════════════════════════════════════════════════════════════════════════

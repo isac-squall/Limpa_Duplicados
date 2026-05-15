@@ -1,0 +1,295 @@
+🚀 GUIA RÁPIDO - LIMPEZA DE DUPLICADOS
+========================================
+
+📌 RESUMO EM 10 SEGUNDOS:
+
+Você tem um executável pronto para usar!
+Não precisa instalar NADA!
+Duplo clique e pronto!
+
+
+✅ COMO USAR - PASSO A PASSO
+═════════════════════════════════════════════════════════════════════════════
+
+PASSO 1️⃣ : Localize o arquivo
+├─ Caminho: dist/
+├─ Nome: Limpa_Pedidos_Base_Pedidos.exe
+└─ Ação: Duplo clique nele
+
+
+PASSO 2️⃣ : Aguarde alguns segundos
+├─ Você verá uma janela preta (console)
+├─ Mostrará mensagens como "Limpeza de duplicados"
+├─ Aguarde 3-5 segundos
+└─ Não feche nada ainda!
+
+
+PASSO 3️⃣ : Navegador abre automaticamente
+├─ Seu navegador padrão vai abrir
+├─ Verá o logo 📦 no topo
+├─ Se não abrir: acesse http://localhost:8501 manualmente
+└─ Pronto! A aplicação está rodando
+
+
+PASSO 4️⃣ : Carregue seu arquivo Excel
+├─ Clique em "📂 Carregue a planilha de pedidos"
+├─ Selecione arquivo .xlsx
+├─ IMPORTANTE: Arquivo PRECISA ter aba "BASE_PEDIDOS"
+└─ Arquivo carrega e mostra preview
+
+
+PASSO 5️⃣ : Escolha as configurações
+├─ Você verá "⚙️ Configuração da análise"
+├─ Escolha qual coluna usar:
+│  ├─ Coluna A (padrão)
+│  └─ Coluna R (se disponível no seu Excel)
+├─ Escolha como tratar duplicados:
+│  ├─ Manter o primeiro
+│  ├─ Manter o último
+│  ├─ Remover todos
+└─ Escolha uma das 3 opções
+
+
+PASSO 6️⃣ : Clique em "Analisar e limpar duplicados"
+├─ Botão verde no meio da tela
+├─ App começa a processar
+├─ Aguarde (deve ser rápido)
+└─ Resultado aparece automaticamente
+
+
+PASSO 7️⃣ : Veja os resultados
+├─ Números no topo mostram:
+│  ├─ Registros originais
+│  ├─ Pedidos duplicados
+│  └─ Registros finais
+├─ Tabela "🔴 Pedidos duplicados" mostra o que foi removido
+├─ Tabela "🟢 Base final" mostra resultado limpo
+└─ Se sem duplicados: mensagem especial "NENHUMA DUPLICATA ENCONTRADA"
+
+
+PASSO 8️⃣ : Baixe seu arquivo Excel
+├─ Clique em "⬇️ Baixar Excel com auditoria completa"
+├─ Arquivo baixa com nome: Pedidos_BASE_PEDIDOS_Auditoria.xlsx
+├─ Contém 2 abas:
+│  ├─ Base_Limpa (resultado final)
+│  └─ Duplicados_Encontrados (o que foi removido)
+└─ Pronto! Use este arquivo normalmente
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+⚠️ IMPORTANTE - REQUISITOS DO ARQUIVO EXCEL
+═════════════════════════════════════════════════════════════════════════════
+
+SEU ARQUIVO EXCEL PRECISA TER:
+
+✅ OBRIGATÓRIO:
+└─ Uma aba chamada exatamente: "BASE_PEDIDOS"
+
+✅ RECOMENDADO:
+├─ Coluna A com dados (números de pedido, etc)
+└─ Coluna R com NF (número de nota fiscal)
+
+❌ NÃO É OBRIGATÓRIO:
+├─ Outras abas (app ignora)
+├─ Outras colunas (app não usa)
+├─ Formatação especial
+└─ Nenhuma ordem específica
+
+
+■ EXEMPLO DE ARQUIVO VÁLIDO:
+
+BASE_PEDIDOS:
+├─ Coluna A (Número Pedido): 001, 002, 001 (DUPLICADO!)
+├─ Coluna B (Cliente): João, Maria, João
+├─ Coluna C (Valor): 100, 200, 100
+├─ Coluna R (NF): 1234, 5678, 1234
+
+Resultado: 1 duplicata encontrada (linha da cópia de "001")
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+❓ DÚVIDAS FREQUENTES
+═════════════════════════════════════════════════════════════════════════════
+
+P: O .exe é seguro? Vai infectar meu PC?
+R: Sim! Compilado com PyInstaller, 100% seguro.
+   Se duvidar, varreie com seu antivírus!
+
+
+P: Preciso instalar Python?
+R: NÃO! Tudo está no arquivo .exe
+   Compartilhe apenas o .exe para outros PCs
+
+
+P: Por quanto tempo posso usar?
+R: Para sempre! Sem limite de tempo ou uso!
+   Sem necessidade de licença ou registro!
+
+
+P: Funciona em Mac ou Linux?
+R: NÃO! Apenas Windows 10/11 (64-bit)
+   Se precisar para Mac, avise para recompilar
+
+
+P: Qual é o tamanho?
+R: ~150-200 MB (normal para Streamlit + Python bundled)
+   Pode levar um tempo para baixar
+
+
+P: Primeira execução é lenta?
+R: SIM! Até 10 segundos é normal
+   Próximas vezes são mais rápidas (cache)
+
+
+P: Navegador não abre?
+R: Acesse manualmente: http://localhost:8501
+   Talvez seu navegador default esteja desabilitado
+
+
+P: Excel não carrega?
+R: Verifique:
+   1. Tem a aba chamada "BASE_PEDIDOS"?
+   2. Arquivo é .xlsx (não .xls)?
+   3. Arquivo não está corrompido?
+
+
+P: Colunas não aparecem?
+R: Vire horizontal com a seta do mouse
+   Tabelas grandes podem ocupar espaço
+
+
+P: Pode processar quantas linhas?
+R: Testado com 10.000+ linhas!
+   Dependente da RAM do seu PC
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+🎯 CENÁRIOS DE USO
+═════════════════════════════════════════════════════════════════════════════
+
+CENÁRIO 1: Análise por Coluna A (Padrão)
+├─ Use quando: Quer remover duplicatas por número do pedido
+├─ Resultado: Mantém 1 pedido, remove repetidas
+└─ Exemplo: Pedidos 001, 002, 001 → Fica 001, 002
+
+
+CENÁRIO 2: Análise por Coluna R (NF)
+├─ Use quando: Quer remover duplicatas por nota fiscal
+├─ Resultado: Mantém 1 NF, remove repetidas
+└─ Exemplo: NF 1000, 2000, 1000 → Fica 1000, 2000
+
+
+CENÁRIO 3: Sem Duplicados (Verificação)
+├─ Use quando: Quer apenas verificar se tem duplicatas
+├─ Resultado: Mensagem "NENHUMA DUPLICATA ENCONTRADA"
+└─ Exemplo: Todos únicos → 0 duplicatas
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+⚡ DICAS PRO
+═════════════════════════════════════════════════════════════════════════════
+
+💡 DICA 1: Use "Manter o Primeiro"
+   └─ Mais comum, preserva histórico
+
+
+💡 DICA 2: Guarde arquivo original
+   └─ App cria novo arquivo, original fica intacto
+
+
+💡 DICA 3: Exporte com auditoria
+   └─ 2 abas mostram exatamente o que foi feito
+
+
+💡 DICA 4: Se tiver muitos dados
+   └─ Processe por lotes menores
+
+
+💡 DICA 5: Compartilhe apenas o .exe
+   └─ Outros PCs não precisam de código
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+🔧 SOLUÇÃO RÁPIDA DE PROBLEMAS
+═════════════════════════════════════════════════════════════════════════════
+
+PROBLEMA: Arquivo .exe não abre
+SOLUÇÃO:
+   1. Verificar se é arquivo correto
+   2. Clicar 2x (não 1x)
+   3. Aguardar 10 segundos
+   4. Se não abrir, compatibilidade pode ser o problema
+
+
+PROBLEMA: Erro "BASE_PEDIDOS não encontrada"
+SOLUÇÃO:
+   1. Abrir Excel original
+   2. Verificar nome da aba
+   3. Aba se chama "BASE_PEDIDOS"?
+   4. Se não, renomear para "BASE_PEDIDOS"
+
+
+PROBLEMA: Nenhum duplicado encontrado (quero verificar)
+SOLUÇÃO:
+   1. Realmente não há duplicados (é normal)
+   2. App mostra mensagem especial: "NENHUMA DUPLICATA ENCONTRADA"
+   3. Isso significa que dados estão limpos!
+
+
+PROBLEMA: Coluna R não aparece na seleção
+SOLUÇÃO:
+   1. Sua coluna pode não se chamar "R"
+   2. Renomear para R, NF, NUMERO_NF
+   3. Recarregar arquivo
+   4. Coluna deve aparecer
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+✅ CHECKLIST ANTES DE USAR
+═════════════════════════════════════════════════════════════════════════════
+
+[_] Encontrou arquivo: dist/Limpa_Pedidos_Base_Pedidos.exe
+[_] Arquivo Excel preparado com aba "BASE_PEDIDOS"
+[_] Tem coluna A com dados para analisar
+[_] (Opcional) Tem coluna R com NF
+[_] Windows 10 ou 11 instalado
+[_] Espaço em disco (pelo menos 500 MB livres)
+[_] Navegador instalado (Chrome, Edge, Firefox, etc)
+
+Se TODOS os itens acima ✅:
+└─ VOCÊ ESTÁ PRONTO!
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+📞 NÃO SABE ALGO?
+═════════════════════════════════════════════════════════════════════════════
+
+Este arquivo: Como usar.txt (no mesmo local)
+├─ Instruções gerais de uso
+
+Arquivo técnico: GUIA_TESTES.txt
+├─ Checklist de funcionalidades
+
+Arquivo de apoio: README_FINAL.txt
+├─ Sumário executivo
+
+Precisa de ajuda: Procure arquivo Como usar.txt
+
+
+═════════════════════════════════════════════════════════════════════════════
+
+🎉 PRONTO! Agora você está 100% preparado para usar!
+
+Dúvidas? Releia este guia ou procure os outros arquivos!
+
+Boa sorte!
+
+═════════════════════════════════════════════════════════════════════════════
+Versão 1.1 | 13 de maio de 2026

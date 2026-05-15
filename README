@@ -1,0 +1,139 @@
+✅ COMO A OUTRA PESSOA USA
+
+python -m streamlit run app.py
+
+Dá duplo clique no .exe
+Aguarda alguns segundos
+O navegador abre
+Carrega a planilha
+Gera Excel com:
+
+Base_Limpa
+Duplicados_Encontrados
+
+
+
+Sem Python, sem venv, sem Streamlit.
+
+📦 Sistema de Limpeza de Pedidos – BASE_PEDIDOS
+📌 Descrição
+Este sistema foi criado para identificar e remover pedidos duplicados a partir de uma planilha Excel, com foco em uso operacional (faturamento, perdas, insucessos, trocas/devoluções).
+O sistema:
+
+Analisa exclusivamente a aba BASE_PEDIDOS
+Identifica duplicidade usando a Coluna A
+Gera um Excel final com auditoria completa
+
+
+✅ O que o sistema faz
+
+✅ Carrega planilhas Excel (.xlsx)
+✅ Identifica pedidos duplicados
+✅ Mostra os duplicados antes da remoção
+✅ Remove duplicados conforme regra escolhida
+✅ Gera um novo Excel com:
+
+Base_Limpa
+Duplicados_Encontrados
+
+
+
+
+📂 Estrutura do arquivo de entrada
+O Excel carregado PRECISA conter:
+
+Aba chamada: BASE_PEDIDOS
+A Coluna A deve conter o número do pedido
+
+⚠️ O sistema não analisa outras abas.
+
+▶️ Como usar (passo a passo)
+
+
+Dê duplo clique no arquivo:
+Limpa_Pedidos_Base_Pedidos.exe
+
+
+
+Aguarde alguns segundos
+(o navegador abrirá automaticamente)
+
+
+Clique em “Carregar planilha”
+
+
+Selecione o arquivo Excel desejado
+
+
+Escolha como tratar os duplicados:
+
+Manter o primeiro
+Manter o último
+Remover todos
+
+
+
+Clique em “Analisar e limpar duplicados”
+
+
+Baixe o arquivo final em Excel
+
+
+
+📊 Arquivo gerado
+O sistema gera um arquivo Excel com duas abas:
+🟢 Aba Base_Limpa
+Contém a base final sem pedidos duplicados
+🔴 Aba Duplicados_Encontrados
+Contém todos os pedidos que estavam duplicados, antes da remoção
+(ideal para auditoria e conferência)
+
+⚠️ Avisos importantes
+
+
+✅ Não é necessário Python instalado
+
+
+✅ Não é necessário instalar nada
+
+
+✅ Pode aparecer aviso do Windows:
+
+“Windows protegeu seu computador”
+
+Nesse caso:
+
+Clique em Mais informações
+Clique em Executar assim mesmo
+
+
+
+Isso é normal para aplicativos internos.
+
+🧠 Boas práticas
+
+Sempre verifique a aba Duplicados_Encontrados
+Não sobrescreva o arquivo original
+Guarde o Excel gerado como evidência
+
+
+🛠 Suporte
+Em caso de dúvida ou erro:
+
+Verifique se a aba se chama BASE_PEDIDOS
+Verifique se a Coluna A contém o número do pedido
+
+
+📅 Versão
+
+Versão: 1.0
+Uso interno
+
+
+✅ DICA FINAL (RECOMENDADO)
+Envie para o usuário apenas dois arquivos:
+
+Limpa_Pedidos_Base_Pedidos.exe
+README.txt
+
+Assim você evita 99% das dúvidas.

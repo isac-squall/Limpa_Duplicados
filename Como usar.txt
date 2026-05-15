@@ -1,0 +1,14 @@
+✅ COMO A OUTRA PESSOA USA
+
+Dá duplo clique no .exe
+Aguarda alguns segundos
+O navegador abre
+Carrega a planilha
+Gera Excel com:
+
+Base_Limpa
+Duplicados_Encontrados
+
+
+
+Sem Python, sem venv, sem Streamlit.

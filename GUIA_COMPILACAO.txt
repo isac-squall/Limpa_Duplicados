@@ -1,0 +1,67 @@
+📋 GUIA DE COMPILAÇÃO DO EXECUTÁVEL
+====================================
+
+✅ COMO COMPILAR (Para desenvolvimento)
+
+1. Abra o terminal PowerShell
+2. Ative o ambiente virtual:
+   .\venv\Scripts\Activate.ps1
+
+3. Instale as dependências (se não estiverem):
+   pip install -r requirements.txt
+
+4. Compile para .exe usando PyInstaller:
+   pyinstaller Limpa_Pedidos_Base_Pedidos.spec --onefile
+
+5. O executável será criado em:
+   dist\Limpa_Pedidos_Base_Pedidos.exe
+
+📦 COMO USAR O EXECUTÁVEL
+
+Para usar em outro PC:
+
+1. Copie apenas o arquivo:
+   dist\Limpa_Pedidos_Base_Pedidos.exe
+
+2. Dê duplo clique no arquivo
+3. Aguarde alguns segundos (primeira execução pode levar mais tempo)
+4. O navegador abrirá automaticamente
+5. Carregue a planilha Excel com a aba "BASE_PEDIDOS"
+6. Escolha as opções:
+   - Qual coluna analisar (A ou R)
+   - Como tratar duplicados (manter primeiro, último ou remover todos)
+7. Clique em "Analisar e limpar duplicados"
+8. Baixe o resultado em Excel
+
+⚠️ REQUISITOS DO ARQUIVO EXCEL
+
+O arquivo PRECISA ter:
+- Uma aba chamada "BASE_PEDIDOS"
+- Coluna A com dados (número do pedido ou similar)
+- Opcionalmente, coluna R com NF
+
+❌ NÃO PRECISA INSTALAR:
+- Python
+- Streamlit
+- pandas
+- Qualquer dependência
+
+✅ TUDO ESTÁ INCLUÍDO NO .EXE
+
+🔧 SOLUÇÃO DE PROBLEMAS
+
+Problema: Executável não abre
+Solução: Tente compilar novamente com .spec atualizado
+
+Problema: Erro ao carregar Excel
+Solução: Verifique se tem a aba "BASE_PEDIDOS"
+
+Problema: Importação customizada necessária
+Solução: Compile novamente após instalar novo pacote
+
+📞 SUPORTE
+
+Versões testadas:
+- Python 3.11+
+- Windows 10/11
+- Excel 2016+
