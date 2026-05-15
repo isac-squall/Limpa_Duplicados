@@ -49,9 +49,9 @@ Versão: 1.1 (Melhorias e pronto para produção)
 └─ Versão: 1.1
 
 [CRIADO] requirements.txt
-├─ streamlit==1.31.1
-├─ pandas==2.1.3
-├─ openpyxl==3.11.0
+├─ streamlit==1.35.0
+├─ pandas==2.3.3
+├─ openpyxl==3.1.2
 ├─ altair==5.1.2
 └─ pyinstaller==6.1.0
 
@@ -176,8 +176,8 @@ Solução: Nomeia a coluna como "R", "NF" ou "NUMERO_NF"
 
 Python: 3.13.13
 PyInstaller: 6.20.0
-Streamlit: 1.31.1
-Pandas: 2.1.3
+Streamlit: 1.35.0
+Pandas: 2.3.3
 Windows: 10/11 64-bit
 
 ================================================================================
