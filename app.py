@@ -27,69 +27,85 @@ arquivo = st.file_uploader(
 
 if arquivo:
     try:
-        # ✅ LÊ SOMENTE A ABA BASE_PEDIDOS
+        # ✅ LEITURA OTIMIZADA E COMPATÍVEL
         df = pd.read_excel(
             arquivo,
-            sheet_name="BASE_PEDIDOS"
+            sheet_name="BASE_PEDIDOS",
+            engine="openpyxl"
         )
+
     except ValueError:
         st.error("❌ A aba 'BASE_PEDIDOS' não foi encontrada no arquivo.")
         st.stop()
 
+    except Exception as e:
+        st.error(f"❌ Erro ao processar o arquivo: {e}")
+        st.stop()
+
     # =========================
-    # LIMPEZA PREVENTIVA (ANTI TELA BRANCA)
+    # LIMPEZA PREVENTIVA
     # =========================
     df = df.loc[:, ~df.columns.astype(str).str.contains("^Unnamed")]
     df.columns = df.columns.astype(str)
 
-    # DataFrame apenas para visualização segura
-    df_visual = df.astype(str)
+    if df.empty:
+        st.error("❌ A planilha está vazia.")
+        st.stop()
 
     # =========================
     # PRÉ-VISUALIZAÇÃO
     # =========================
     st.subheader("🔍 Pré-visualização da BASE_PEDIDOS")
-    st.dataframe(df_visual.head(50), width="stretch")
+    st.dataframe(df.head(50).astype(str), use_container_width=True)
 
     # =========================
     # SELEÇÃO DA COLUNA DE ANÁLISE
     # =========================
     st.subheader("⚙️ Configuração da análise")
-    
-    # Oferece opções de coluna
+
     opcoes_coluna = []
+
+    # Coluna A (primeira)
     coluna_a = df.columns[0] if len(df.columns) > 0 else None
-    coluna_r = None
-    
-    # Procura pela coluna A (primeira coluna)
+
+    # Coluna R (NF ou equivalentes)
+    coluna_r = next(
+        (col for col in df.columns
+         if str(col).upper() in ['R', 'NF', 'NUMERO_NF', 'NUM_NF', 'NFE']),
+        None
+    )
+
     if coluna_a:
         opcoes_coluna.append(f"Coluna A: {coluna_a}")
-    
-    # Procura pela coluna R (geralmente NF)
-    for col in df.columns:
-        if str(col).upper() in ['R', 'NF', 'NUMERO_NF', 'NUM_NF', 'NFE']:
-            coluna_r = col
-            opcoes_coluna.append(f"Coluna R: {coluna_r}")
-            break
-    
+
+    if coluna_r:
+        opcoes_coluna.append(f"Coluna R: {coluna_r}")
+
     if len(opcoes_coluna) > 1:
         coluna_selecionada = st.radio(
             "Escolha qual coluna usar para análise de duplicatas:",
-            options=opcoes_coluna,
-            key="coluna_escolha"
+            options=opcoes_coluna
         )
-        
-        if "Coluna A" in coluna_selecionada:
-            coluna_chave = coluna_a
-        else:
-            coluna_chave = coluna_r
+
+        coluna_chave = coluna_a if "Coluna A" in coluna_selecionada else coluna_r
+
     else:
         coluna_chave = coluna_a
+
         if coluna_chave:
             st.info(f"🔑 A duplicidade será analisada pela **Coluna A**: `{coluna_chave}`")
         else:
             st.error("❌ Nenhuma coluna válida encontrada.")
             st.stop()
+
+    # =========================
+    # VALIDAÇÃO DE DADOS
+    # =========================
+    df = df.dropna(subset=[coluna_chave])
+
+    if df.empty:
+        st.error("❌ Não há dados válidos após remover valores vazios.")
+        st.stop()
 
     # =========================
     # REGRA DE TRATAMENTO
@@ -113,94 +129,105 @@ if arquivo:
     # PROCESSAMENTO
     # =========================
     if st.button("🧹 Analisar e limpar duplicados"):
-        total_antes = len(df)
+        with st.spinner("Processando dados..."):
 
-        # 🔴 DUPLICADOS ANTES DA REMOÇÃO
-        df_duplicados = df[df.duplicated(
-            subset=[coluna_chave],
-            keep=False
-        )]
+            total_antes = len(df)
 
-        # 🟢 BASE LIMPA
-        df_limpo = df.drop_duplicates(
-            subset=[coluna_chave],
-            keep=keep
-        )
+            # DUPLICADOS
+            df_duplicados = df[
+                df.duplicated(subset=[coluna_chave], keep=False)
+            ].sort_values(by=coluna_chave)
 
-        total_depois = len(df_limpo)
-
-        # =========================
-        # RESULTADO GERAL - COM MELHOR FEEDBACK
-        # =========================
-        if df_duplicados.empty:
-            st.success("✅ ANÁLISE CONCLUÍDA - NENHUMA DUPLICATA ENCONTRADA!")
-            st.info(
-                f"📌 A base contém **{total_antes}** registros únicos pela coluna `{coluna_chave}`. "
-                "Não há dados duplicados para remover."
+            # BASE LIMPA
+            df_limpo = df.drop_duplicates(
+                subset=[coluna_chave],
+                keep=keep
             )
-        else:
-            st.warning(f"⚠️ **{len(df_duplicados)} registros duplicados** foram encontrados e processados.")
-            st.success("✅ Processamento concluído com êxito.")
 
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Registros originais", total_antes)
-        col2.metric("Pedidos duplicados", len(df_duplicados))
-        col3.metric("Registros finais", total_depois)
+            total_depois = len(df_limpo)
 
-        # =========================
-        # VISUALIZAÇÃO DOS DUPLICADOS
-        # =========================
-        st.subheader("🔴 Pedidos duplicados (antes da remoção)")
-        if df_duplicados.empty:
-            st.info("✅ Nenhum registro duplicado encontrado para exibição.")
-        else:
-            st.warning(f"⚠️ Total de {len(df_duplicados)} registros duplicados:")
+            # =========================
+            # MÉTRICAS
+            # =========================
+            percentual = (
+                (len(df_duplicados) / total_antes) * 100
+                if total_antes > 0 else 0
+            )
+
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Registros originais", total_antes)
+            col2.metric("Duplicados", len(df_duplicados))
+            col3.metric("Registros finais", total_depois)
+            col4.metric("Taxa de duplicação", f"{percentual:.2f}%")
+
+            # =========================
+            # FEEDBACK
+            # =========================
+            if df_duplicados.empty:
+                st.success("✅ Nenhuma duplicata encontrada!")
+            else:
+                st.warning(f"⚠️ {len(df_duplicados)} registros duplicados encontrados.")
+                st.success("✅ Processamento concluído com sucesso.")
+
+            # =========================
+            # VISUALIZAÇÃO
+            # =========================
+            st.subheader("🔴 Duplicados encontrados")
+
+            if df_duplicados.empty:
+                st.info("Nenhum duplicado para exibir.")
+            else:
+                st.dataframe(
+                    df_duplicados.head(200).astype(str),
+                    use_container_width=True
+                )
+
+            st.subheader("🟢 Base final tratada")
+
             st.dataframe(
-                df_duplicados.astype(str),
-                width="stretch"
+                df_limpo.head(200).astype(str),
+                use_container_width=True
             )
 
-        # =========================
-        # VISUALIZAÇÃO DA BASE LIMPA
-        # =========================
-        st.subheader("🟢 Base final sem duplicados")
-        st.dataframe(
-            df_limpo.astype(str),
-            width="stretch"
-        )
+            # =========================
+            # EXPORTAÇÃO
+            # =========================
+            buffer = BytesIO()
 
-        # =========================
-        # EXPORTAÇÃO EXCEL (AUDITORIA)
-        # =========================
-        buffer = BytesIO()
-        with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
-            df_limpo.to_excel(
-                writer,
-                sheet_name="Base_Limpa",
-                index=False
+            with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+                df_limpo.to_excel(
+                    writer,
+                    sheet_name="Base_Limpa",
+                    index=False
+                )
+
+                df_duplicados.to_excel(
+                    writer,
+                    sheet_name="Duplicados_Encontrados",
+                    index=False
+                )
+
+            buffer.seek(0)
+
+            st.download_button(
+                "⬇️ Baixar Excel com auditoria completa",
+                data=buffer,
+                file_name="Pedidos_BASE_PEDIDOS_Auditoria.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
-            df_duplicados.to_excel(
-                writer,
-                sheet_name="Duplicados_Encontrados",
-                index=False
+
+            # =========================
+            # RESUMO FINAL
+            # =========================
+            st.divider()
+            st.info(
+                f"""
+📊 **Resumo da operação**
+
+- Coluna analisada: `{coluna_chave}`
+- Registros analisados: {total_antes}
+- Duplicatas encontradas: {len(df_duplicados)}
+- Registros finais: {total_depois}
+- Regra aplicada: {regra}
+"""
             )
-
-        buffer.seek(0)
-
-        st.download_button(
-            "⬇️ Baixar Excel com auditoria completa",
-            data=buffer,
-            file_name="Pedidos_BASE_PEDIDOS_Auditoria.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-        
-        # Informação adicional sobre o processamento
-        st.divider()
-        st.info(
-            f"📊 **Resumo da operação:**\n\n"
-            f"- Coluna analisada: `{coluna_chave}`\n"
-            f"- Registros verificados: {total_antes}\n"
-            f"- Duplicatas encontradas: {len(df_duplicados)}\n"
-            f"- Registros finais (após limpeza): {total_depois}\n"
-            f"- Regra aplicada: {regra}"
-        )
